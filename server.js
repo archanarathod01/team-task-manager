@@ -18,7 +18,6 @@ const app = express();
 /* ===================== MIDDLEWARE ===================== */
 
 app.use(express.json());
-
 app.use(cors());
 app.use(helmet());
 
@@ -29,9 +28,9 @@ app.use(rateLimit({
 
 /* ===================== ROUTES ===================== */
 
-// Test route
+// Health check (Railway important)
 app.get("/", (req, res) => {
-  res.send("API running");
+  res.status(200).json({ message: "API running" });
 });
 
 // API routes
@@ -40,13 +39,17 @@ app.use("/api", taskRoutes);
 
 /* ===================== ERROR HANDLER ===================== */
 
-// ⚠️ always last
 app.use(errorHandler);
 
 /* ===================== SERVER START ===================== */
 
-// 🔥 ADD THIS LINE (IMPORTANT DEBUG)
+// 🔥 DEBUG (do not remove yet)
 console.log("ENV CHECK:", process.env.MONGO_URI ? "FOUND" : "MISSING");
+
+if (!process.env.MONGO_URI) {
+  console.error("❌ MONGO_URI missing");
+  process.exit(1);
+}
 
 mongoose.connect(process.env.MONGO_URI)
 .then(() => {
@@ -54,8 +57,8 @@ mongoose.connect(process.env.MONGO_URI)
 
   const PORT = process.env.PORT || 5000;
 
-  app.listen(PORT, () => {
+  app.listen(PORT, "0.0.0.0", () => {
     console.log(`Server running on port ${PORT}`);
   });
 })
-.catch(err => console.error(err));
+.catch(err => console.error("DB ERROR:", err));
