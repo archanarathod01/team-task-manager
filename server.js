@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 
-// 🔥 SMART dotenv (IMPORTANT)
+// 🔥 dotenv only for local
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
@@ -32,9 +32,9 @@ app.use(rateLimit({
 
 /* ===================== ROUTES ===================== */
 
-// Health check (Railway important)
+// ✅ ROOT (IMPORTANT)
 app.get("/", (req, res) => {
-  res.status(200).json({ message: "API running" });
+  res.send("API running");
 });
 
 // API routes
@@ -43,11 +43,12 @@ app.use("/api", taskRoutes);
 
 /* ===================== ERROR HANDLER ===================== */
 
+// ✅ MUST SEND RESPONSE
 app.use(errorHandler);
 
 /* ===================== SERVER START ===================== */
 
-// 🔥 DEBUG (do not remove yet)
+// Debug
 console.log("ENV CHECK:", process.env.MONGO_URI ? "FOUND" : "MISSING");
 
 if (!process.env.MONGO_URI) {

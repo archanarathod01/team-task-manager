@@ -1,7 +1,13 @@
 module.exports = (err, req, res, next) => {
-  console.error(err);
+  console.error("🔥 ERROR:", err.stack);
 
-  res.status(err.status || 500).json({
+  // अगर headers already sent हैं तो next करो
+  if (res.headersSent) {
+    return next(err);
+  }
+
+  res.status(err.statusCode || 500).json({
+    success: false,
     message: err.message || "Internal Server Error"
   });
 };
