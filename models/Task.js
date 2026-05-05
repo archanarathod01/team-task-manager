@@ -14,6 +14,14 @@ const taskSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"
   }
-}, { timestamps: true });
+}, {
+  timestamps: true,
+  toJSON: {
+    transform: function (doc, ret) {
+      delete ret.__v;
+      return ret;
+    }
+  }
+});
 
 module.exports = mongoose.model("Task", taskSchema);
