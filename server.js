@@ -1,6 +1,10 @@
 const express = require("express");
 const mongoose = require("mongoose");
-require("dotenv").config();
+
+// 🔥 SMART dotenv (IMPORTANT)
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
 
 // 🔹 ROUTES
 const authRoutes = require("./routes/authRoutes");
