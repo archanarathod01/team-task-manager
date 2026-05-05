@@ -45,6 +45,9 @@ app.use(errorHandler);
 
 /* ===================== SERVER START ===================== */
 
+// 🔥 ADD THIS LINE (IMPORTANT DEBUG)
+console.log("ENV CHECK:", process.env.MONGO_URI ? "FOUND" : "MISSING");
+
 mongoose.connect(process.env.MONGO_URI)
 .then(() => {
   console.log("MongoDB Connected");
