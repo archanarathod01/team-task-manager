@@ -34,12 +34,13 @@ app.use(rateLimit({
 
 // ✅ ROOT (IMPORTANT)
 app.get("/", (req, res) => {
-  res.send("API running");
+  console.log("ROOT HIT");
+  res.send("WORKING ROOT");
 });
 
 // API routes
-app.use("/api/auth", authRoutes);
-app.use("/api", taskRoutes);
+//app.use("/api/auth", authRoutes);
+//app.use("/api", taskRoutes);
 
 /* ===================== ERROR HANDLER ===================== */
 
