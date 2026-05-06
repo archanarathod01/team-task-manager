@@ -39,8 +39,8 @@ app.get("/", (req, res) => {
 });
 
 // API routes
-//app.use("/api/auth", authRoutes);
-//app.use("/api", taskRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api", taskRoutes);
 
 /* ===================== ERROR HANDLER ===================== */
 
